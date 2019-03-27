@@ -1,0 +1,13 @@
+[Unit]
+Description = PCの利用状況を確認、管理するサーバ
+After=network.target
+ConditionPathExists=/opt/status-of-use
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/status-of-use
+ExecStart=/usr/local/bin/bundle exec rackup -p 4567 /opt/status-of-use/config.ru
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

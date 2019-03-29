@@ -1,0 +1,12 @@
+network:
+        interface:
+                - name: test-bond-01
+                  type: bond
+                  mode: balance-alb
+                  slave:
+                        - name: test-slave-01
+                          ifname: eth0
+                          type: ether
+                        - name: test-slave-01
+                          ifname: eth1
+                          type: ether

@@ -1,5 +1,5 @@
-network:
-        interface:
+network_manager:
+        connection:
                 - name: test-bond-01
                   type: bond
                   mode: balance-alb

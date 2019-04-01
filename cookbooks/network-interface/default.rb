@@ -1,16 +1,24 @@
-node[:network_manager][:interface].each do |interface|
+node[:network_manager][:connection].each do |connection|
 
-	execute "add network interface" do
+	execute "add network connection" do
 		user "root"
-		command "nmcli con add type #{interface[:type]} ifname #{interface[:name]} mode #{interface[:mode]}"
+		command "nmcli con add type #{connection[:type]} ifname #{connection[:name]} mode #{connection[:mode]}"
 	end
 
-	if interface.has_key?(:slave)
-		interface[:slave].each do |slave|
+	if connection.has_key?(:ipv4) or 
+		connection.has_key?(:autoconnect) then
+		execute "modify network connection" do
+			user "root"
+			command "nmcli con mod "
+		end
+	end
+
+	if connection.has_key?(:slave)
+		connection[:slave].each do |slave|
 
 			execute "add slave connection" do
 				user "root"
-				command "nmcli con add type #{interface[:type]} con-name #{slave[:con_name]} ifname #{slave[:ifname]} master #{interface[:name]}"
+				command "nmcli con add type #{connection[:type]} con-name #{slave[:con_name]} ifname #{slave[:ifname]} master #{connection[:name]}"
 			end
 		
 		end 
